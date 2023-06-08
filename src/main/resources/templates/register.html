@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <title>Register</title>
+</head>
+<body>
+<div th:if="${param.error}">
+  Unable to create user. Please try again.
+</div>
+<form id="registerForm">
+  <div><label> Username : <input type="text" name="username" id="username"/> </label></div>
+  <div><label> Password: <input type="password" name="password" id="password"/> </label></div>
+  <div><input type="submit" value="Register"/></div>
+</form>
+
+<script>
+  document.getElementById('registerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+
+    fetch('/users/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username: username, password: password }),
+    })
+            .then(response => response.json())
+            .then(data => {
+              if (data.message === "User created successfully!") {
+                window.location.href = '/login';
+              } else {
+                alert(data.message);
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+            });
+  });
+</script>
+
+</body>
+</html>
