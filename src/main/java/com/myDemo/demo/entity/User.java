@@ -1,15 +1,30 @@
 package com.myDemo.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+public class User implements UserDetails{
 
-public class User implements UserDetails {
     private Integer userId;
     private String userName;
     private String password;
+
+    public void setName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setUserId(int id){
+        this.userId = id;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public User() {
     }
@@ -20,31 +35,26 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    // Username corresponds to the email in your case
     @Override
     public String getUsername() {
         return userName;
     }
 
-    // In a real application you should have this field
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    // In a real application you should have this field
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    // In a real application you should have this field
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    // In a real application you should have this field
     @Override
     public boolean isEnabled() {
         return true;
@@ -55,11 +65,9 @@ public class User implements UserDetails {
         return password;
     }
 
-    // This would normally return a collection of roles or privileges
-    // that the user has, for use in authorizing their actions.
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
     }
-
 }

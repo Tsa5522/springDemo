@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.myDemo.demo.mapper.iUserMapper">
-    <select id="getAll" resultType="String">
-        SELECT userName FROM employees WHERE userId = 1;
+<mapper namespace="com.myDemo.demo.mapper.UserDetailMapper">
+
+    <resultMap id="BaseResultMap" type="com.myDemo.demo.entity.User">
+        <result column= "userId" jdbcType="int" property="userId"></result>
+        <result column="userName" jdbcType="VARCHAR" property="userName"></result>
+        <result column="password" jdbcType="VARCHAR" property="password"></result>
+    </resultMap>
+
+    <select id="findUserByName" resultMap="BaseResultMap">
+        SELECT * FROM users WHERE userName = #{userName};
     </select>
+
+    <insert id="insert" parameterType="User">
+        INSERT INTO users(userName, password) VALUES(#{userName}, #{password})
+    </insert>
 </mapper>

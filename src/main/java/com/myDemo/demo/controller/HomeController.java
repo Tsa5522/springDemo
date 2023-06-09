@@ -1,5 +1,8 @@
 package com.myDemo.demo.controller;
 
+import com.myDemo.demo.entity.User;
+import com.myDemo.demo.service.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -28,6 +31,6 @@ public class HomeController {
     @GetMapping("/perform_login")
     public String getLoginProcess() {return "performLogin";}
 
-    @GetMapping("/users/create")
+    @GetMapping("/register")
     public String getRegistration() {return "register";}
 }

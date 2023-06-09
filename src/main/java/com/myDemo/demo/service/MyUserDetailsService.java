@@ -1,8 +1,11 @@
 package com.myDemo.demo.service;
 
 import com.myDemo.demo.entity.User;
+import com.myDemo.demo.entity.UserDTO;
 import com.myDemo.demo.mapper.UserDetailMapper;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,8 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@Primary
 public class MyUserDetailsService implements UserDetailsService {
-
+//public class MyUserDetailsService{
     private final UserDetailMapper userDetailMapper;
 
     @Autowired
@@ -33,9 +37,17 @@ public class MyUserDetailsService implements UserDetailsService {
     private PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-    public void createUser(String userName, String password) {
-        User newUser = new User(0, userName, passwordEncoder().encode(password));
-        userDetailMapper.createUser(newUser);
-    }
 
+    public void createUser(UserDTO userDTO) {
+        User user = new User();
+        user.setUserId(0);
+        user.setName(userDTO.getUserName());
+        user.setPassword(userDTO.getPassword());
+        userDetailMapper.insert(user);
+        System.out.println("hellohellohellohellohellohello"+user.getUsername());
+    }
+    @PostConstruct
+    public void init() {
+        System.out.println("MyUserDetailsService is created!");
+    }
 }

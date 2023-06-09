@@ -8,8 +8,8 @@
   Unable to create user. Please try again.
 </div>
 <form id="registerForm">
-  <div><label> Username : <input type="text" name="username" id="username"/> </label></div>
-  <div><label> Password: <input type="password" name="password" id="password"/> </label></div>
+  <div><label> Username : <input type="text" id="username"/> </label></div>
+  <div><label> Password: <input type="password" id="password"/> </label></div>
   <div><input type="submit" value="Register"/></div>
 </form>
 
@@ -28,10 +28,10 @@
     })
             .then(response => response.json())
             .then(data => {
-              if (data.message === "User created successfully!") {
+              if (data.message === 'User created successfully!') {
                 window.location.href = '/login';
               } else {
-                alert(data.message);
+                alert('There was an error creating your account. Please try again.');
               }
             })
             .catch((error) => {
@@ -39,6 +39,7 @@
             });
   });
 </script>
+
 
 </body>
 </html>

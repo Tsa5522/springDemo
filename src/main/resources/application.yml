@@ -9,9 +9,10 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
 
 mybatis:
-#    mapper-locations: classpath*:mapper/*Mapper.xml
+    mapper-locations: classpath*:mapper/userMapper.xml
     type-aliases-package: com.myDemo.demo.entity
 
-#logging:
-#    level:
-#        org.springframework.security: DEBUG
+logging:
+    level:
+        com.com.myDemo.demo.mapper: DEBUG
+

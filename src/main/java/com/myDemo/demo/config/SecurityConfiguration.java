@@ -1,8 +1,10 @@
 package com.myDemo.demo.config;
 
 import com.myDemo.demo.service.MyUserDetailsService;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,10 +17,15 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@MapperScan("com.myDemo.demo.mapper")
+@ComponentScan("com.myDemo.demo")
 public class SecurityConfiguration {
 
-    @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private final MyUserDetailsService myUserDetailsService;
+
+    public SecurityConfiguration(MyUserDetailsService myUserDetailsService) {
+        this.myUserDetailsService = myUserDetailsService;
+    }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
@@ -38,7 +45,7 @@ public class SecurityConfiguration {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/login", "/users/create").permitAll()  // permit register url
+                        .requestMatchers("/", "/login", "/register", "/users/create").permitAll()  // permit register url
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
