@@ -14,5 +14,5 @@ mybatis:
 
 logging:
     level:
-        com.com.myDemo.demo.mapper: DEBUG
-
+        root: INFO
+        com.myDemo.demo: DEBUG

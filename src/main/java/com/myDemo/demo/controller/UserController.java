@@ -1,5 +1,6 @@
 package com.myDemo.demo.controller;
 
+
 import com.myDemo.demo.entity.User;
 import com.myDemo.demo.entity.UserDTO;
 import com.myDemo.demo.service.MyUserDetailsService;
@@ -12,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+//@RequestMapping(value = "/users", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/users")
 public class UserController {
 
     private final MyUserDetailsService myUserDetailsService;
@@ -33,7 +35,6 @@ public class UserController {
             return new ResponseEntity<>(Map.of("message", "Error: User could not be created!"), HttpStatus.BAD_REQUEST);
         }
     }
-
-
-
 }
+
+

@@ -4,16 +4,16 @@
 <mapper namespace="com.myDemo.demo.mapper.UserDetailMapper">
 
     <resultMap id="BaseResultMap" type="com.myDemo.demo.entity.User">
-        <result column= "userId" jdbcType="int" property="userId"></result>
-        <result column="userName" jdbcType="VARCHAR" property="userName"></result>
-        <result column="password" jdbcType="VARCHAR" property="password"></result>
+        <id column="userId" property="userId" jdbcType="INTEGER"/>
+        <result column="userName" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
     </resultMap>
 
     <select id="findUserByName" resultMap="BaseResultMap">
         SELECT * FROM users WHERE userName = #{userName};
     </select>
 
-    <insert id="insert" parameterType="User">
+    <insert id="insert" parameterType="com.myDemo.demo.entity.User">
         INSERT INTO users(userName, password) VALUES(#{userName}, #{password})
     </insert>
 </mapper>

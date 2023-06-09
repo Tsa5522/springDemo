@@ -3,7 +3,6 @@ package com.myDemo.demo.service;
 import com.myDemo.demo.entity.User;
 import com.myDemo.demo.entity.UserDTO;
 import com.myDemo.demo.mapper.UserDetailMapper;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,13 +40,9 @@ public class MyUserDetailsService implements UserDetailsService {
     public void createUser(UserDTO userDTO) {
         User user = new User();
         user.setUserId(0);
-        user.setName(userDTO.getUserName());
-        user.setPassword(userDTO.getPassword());
+        user.setUserName(userDTO.getUserName());
+        user.setPassword(passwordEncoder().encode(userDTO.getPassword()));
         userDetailMapper.insert(user);
-        System.out.println("hellohellohellohellohellohello"+user.getUsername());
     }
-    @PostConstruct
-    public void init() {
-        System.out.println("MyUserDetailsService is created!");
-    }
+
 }
