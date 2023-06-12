@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -47,6 +48,13 @@ public class UserController {
             return new ResponseEntity<>(Map.of("message", "Error: Something went wrong, please try again later."), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = myUserDetailsService.findAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
 
 }
 

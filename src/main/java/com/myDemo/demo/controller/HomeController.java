@@ -33,4 +33,7 @@ public class HomeController {
 
     @GetMapping("/register")
     public String getRegistration() {return "register";}
+
+    @GetMapping("/userList")
+    public String getUserList() {return "userTable";}
 }

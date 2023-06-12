@@ -12,6 +12,15 @@ public class User implements UserDetails{
     private String userName;
     private String password;
 
+    private Role role;
+
+    public void setRole(Role role){
+        this.role = role;
+    }
+
+    public Role getRole() {
+        return role;
+    }
     public void setUserName(String userName) {
         this.userName = userName;
     }

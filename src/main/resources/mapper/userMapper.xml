@@ -9,8 +9,10 @@
         <result column="password" property="password" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id="findUserByName" resultMap="BaseResultMap">
-        SELECT * FROM users WHERE userName = #{userName};
+    <select id="findUserByName" resultType="com.myDemo.demo.entity.User">
+        SELECT *
+        FROM users
+        WHERE userName = #{userName}
     </select>
 
     <insert id="insert" parameterType="com.myDemo.demo.entity.User">
@@ -20,4 +22,8 @@
     <update id="updatePassword">
         UPDATE users SET password = #{password} WHERE userName = #{userName}
     </update>
+
+    <select id="findAllUsers" resultType="com.myDemo.demo.entity.User">
+        SELECT * FROM users
+    </select>
 </mapper>

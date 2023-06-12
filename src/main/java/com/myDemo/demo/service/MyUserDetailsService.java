@@ -5,11 +5,15 @@ import com.myDemo.demo.entity.UserDTO;
 import com.myDemo.demo.mapper.UserDetailMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Primary
@@ -22,14 +26,26 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
 
+//    @Override
+//    public User loadUserByUsername(String userName) throws UsernameNotFoundException {
+//        User user = userDetailMapper.findUserByName(userName);
+//        if (user == null) {
+//            throw new UsernameNotFoundException("User not found");
+//        }
+//        return user;
+//    }
+
     @Override
     public User loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userDetailMapper.findUserByName(userName);
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
         return user;
     }
+
 
     private PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -51,6 +67,10 @@ public class MyUserDetailsService implements UserDetailsService {
         } else {
             throw new UsernameNotFoundException("User not found");
         }
+    }
+
+    public List<User> findAllUsers() {
+        return userDetailMapper.findAllUsers();
     }
 
 

@@ -46,6 +46,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/login", "/register", "/users/create").permitAll()  // permit register url
+                        .requestMatchers("/users/all").hasAuthority("ADMIN") //only allow ADMIN access to /users
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

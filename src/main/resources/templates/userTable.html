@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>List of users:</h2>
+
+<ul id="userList"></ul>
+
+<script>
+  fetch('/users/all')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log(data);
+            const userList = document.getElementById('userList');
+            data.forEach(user => {
+              let listItem = document.createElement('li');
+              listItem.textContent = `${user.username} - ${user.role} - ${user.password}`;
+              userList.appendChild(listItem);
+            });
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+</script>
+
+<!--<table id="usersTable">-->
+<!--  <tr>-->
+<!--    <th>ID</th>-->
+<!--    <th>Username</th>-->
+<!--  </tr>-->
+<!--</table>-->
+</body>
+</html>
