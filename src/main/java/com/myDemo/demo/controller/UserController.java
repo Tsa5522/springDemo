@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -35,6 +36,18 @@ public class UserController {
             return new ResponseEntity<>(Map.of("message", "Error: User could not be created!"), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PostMapping("updatePassword")
+    public ResponseEntity<?> updatePassword(@RequestBody UserDTO userDTO) {
+        try {
+            myUserDetailsService.changeUserPassword(userDTO.getUserName(), userDTO.getNewPassword());
+            return new ResponseEntity<>(Map.of("message", "Password changed successfully!"), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(Map.of("message", "Error: Something went wrong, please try again later."), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
 
 

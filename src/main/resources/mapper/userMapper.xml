@@ -16,4 +16,8 @@
     <insert id="insert" parameterType="com.myDemo.demo.entity.User">
         INSERT INTO users(userName, password) VALUES(#{userName}, #{password})
     </insert>
+
+    <update id="updatePassword">
+        UPDATE users SET password = #{password} WHERE userName = #{userName}
+    </update>
 </mapper>

@@ -1,42 +1,64 @@
 <!DOCTYPE html>
-<html class="h-full bg-gray-100">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Something Homepage</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Change Password</title>
 </head>
-
 <body>
 <div class="px-4 sm:px-0">
     <a class="navbar-brand" th:href="@{/homePage}">Homepage</a>
 </div>
-    <div class="mx-auto w-6/12">
-        <div class="px-4 sm:px-0">
-            <h3 class="text-base font-semibold leading-7 text-gray-900">Information</h3>
-            <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">User Profile</p>
-            <a class="nav-link active" aria-current="page" th:href="@{/users/getUserPassword}">My password</a>
-        </div>
-
-
-        <div class="mt-6 border-t border-gray-100">
-            <dl class="divide-y divide-gray-100">
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">User Name</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                        There should be something here but its not up yet.
-                    </dd>
-                </div>
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">User ID</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Backend Developer</dd>
-                </div>
-                <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                    <dt class="text-sm font-medium leading-6 text-gray-900">Email address</dt>
-                    <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">margotfoster@example.com</dd>
-                </div>
-            </dl>
-        </div>
+<h2>Change Password</h2>
+<form id="change-password-form">
+    <div>
+        <label for="userName">User Name:</label>
+        <input type="userName" id="userName" name="userName" required>
     </div>
-</body>
+    <div>
+        <label for="newPassword">New Password:</label>
+        <input type="password" id="newPassword" name="newPassword" required>
+    </div>
+    <div>
+        <label for="confirmPassword">Confirm New Password:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required>
+    </div>
+    <button type="submit">Change Password</button>
+</form>
 
+<script> document.getElementById('change-password-form').addEventListener('submit', function(event) {
+    event.preventDefault();  // Prevent form from submitting normally
+
+    var userName = document.getElementById('userName').value;
+    var newPassword = document.getElementById('newPassword').value;
+    var confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (newPassword !== confirmPassword) {
+        alert('New passwords do not match. Please try again.');
+        return;
+    }
+
+    // Make a POST request to your server to change the password
+    fetch('users/updatePassword', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            userName: userName,
+            newPassword: newPassword,
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Password changed successfully!');
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+});
+</script>
+</body>
 </html>

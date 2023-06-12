@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 @Primary
 public class MyUserDetailsService implements UserDetailsService {
-//public class MyUserDetailsService{
     private final UserDetailMapper userDetailMapper;
 
     @Autowired
@@ -29,7 +28,6 @@ public class MyUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        //System.out.println("Loaded user by username: " + user);  // Add this line
         return user;
     }
 
@@ -44,5 +42,16 @@ public class MyUserDetailsService implements UserDetailsService {
         user.setPassword(passwordEncoder().encode(userDTO.getPassword()));
         userDetailMapper.insert(user);
     }
+
+    public void changeUserPassword(String username, String newPassword) {
+        User user = userDetailMapper.findUserByName(username);
+        if (user != null) {
+            String encodedPassword = passwordEncoder().encode(newPassword);
+            userDetailMapper.updatePassword(user.getUsername(), encodedPassword);
+        } else {
+            throw new UsernameNotFoundException("User not found");
+        }
+    }
+
 
 }
