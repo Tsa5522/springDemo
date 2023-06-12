@@ -2,7 +2,6 @@ package com.myDemo.demo.config;
 
 import com.myDemo.demo.service.MyUserDetailsService;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -46,7 +45,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/", "/login", "/register", "/users/create").permitAll()  // permit register url
-                        .requestMatchers("/users/all").hasAuthority("ADMIN") //only allow ADMIN access to /users
+                        .requestMatchers("/users/all").hasRole("ADMIN") //only allow ADMIN access to /users
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

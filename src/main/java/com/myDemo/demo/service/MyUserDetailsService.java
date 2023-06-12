@@ -6,6 +6,7 @@ import com.myDemo.demo.mapper.UserDetailMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,15 +36,34 @@ public class MyUserDetailsService implements UserDetailsService {
 //        return user;
 //    }
 
+//    @Override
+//    public User loadUserByUsername(String userName) throws UsernameNotFoundException {
+//        User user = userDetailMapper.findUserByName(userName);
+//        if (user == null) {
+//            throw new UsernameNotFoundException("User not found");
+//        }
+//        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
+//
+//        return user;
+//    }
+
     @Override
-    public User loadUserByUsername(String userName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         User user = userDetailMapper.findUserByName(userName);
-        if (user == null) {
+        if (user != null) {
+            return org.springframework.security.core.userdetails.User
+                    .withUsername(user.getUsername())
+                    .password(user.getPassword())
+                    .authorities(user.getRole().name())
+                    .accountExpired(false)
+                    .accountLocked(false)
+                    .credentialsExpired(false)
+                    .disabled(false)
+                    .build();
+        } else {
             throw new UsernameNotFoundException("User not found");
         }
-        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().name()));
-        return user;
     }
 
 
