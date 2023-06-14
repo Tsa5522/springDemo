@@ -14,7 +14,7 @@ The primary goal of this project is to implement a more sophisticated user manag
 
 To run this project locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/repository.git`
+1. Clone the repository: `git clone https://github.com/tsa5522/springDemo.git`
 2. Navigate to the project directory: `cd repository`
 3. Ensure that you have Java Development Kit (JDK) installed and configured(I used JDK 17 as you can see in the pom.xml file).
 4. Install the necessary dependencies
